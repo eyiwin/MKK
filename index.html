@@ -72,10 +72,19 @@
   ol.five b { display: block; }
   ol.five span { color: var(--muted); font-size: 15px; }
 
-  .jobs { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
-  .jobs li button { border: 2px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px; padding: 8px 12px;
-    font: 600 15px/1.2 inherit; font-family: inherit; cursor: pointer; }
-  .jobs li button.done { border-color: var(--ok); color: var(--ok); }
+  section.optional { border-style: dashed; }
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 12px 0 4px; border: 2px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .tabs button { border: 0; background: var(--bg); color: var(--ink); padding: 12px 8px; font: 800 16px/1.2 inherit; font-family: inherit; cursor: pointer; }
+  .tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+  .jobs { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 10px; }
+  .jobs[hidden] { display: none; }
+  .jobs .grp { display: block; color: var(--red); font-weight: 800; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; margin: 0 0 4px; }
+  .jobs button { width: 100%; text-align: left; border: 2px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 12px;
+    padding: 10px 12px; font: 15px/1.35 inherit; font-family: inherit; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+  .jobs button b { display: block; font-size: 16px; }
+  .jobs button .cp { font-weight: 800; font-size: 14px; white-space: nowrap; }
+  .jobs button.done { border-color: var(--ok); }
+  .jobs button.done .cp { color: var(--ok); }
 
   .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
   .apps a { display: block; text-align: center; text-decoration: none; color: var(--ink); border: 2px solid var(--line); border-radius: 12px; padding: 12px 8px; font-weight: 800; }
@@ -126,7 +135,7 @@
   <span class="tag">Step 1 · Find</span>
   <h2>What do you do over and over?</h2>
   <span class="time">8 minutes</span>
-  <p class="where">Open a <b>normal new chat</b>. Fill in the two boxes, then copy and paste:</p>
+  <p class="where">Open a <b>normal new chat</b>. Fill in the two boxes, then copy and paste. No job of your own? Skip the boxes and <a href="#jobs">borrow one below</a>.</p>
 
   <div class="fields">
     <label>What do you do? <small>e.g. run a small bakery, work as an HR executive</small>
@@ -137,7 +146,38 @@
 
   <div class="prompt" id="t-1">I'm not technical. I <span class="fill" data-f="f-role">run a small business</span> in <span class="fill" data-f="f-town">Petaling Jaya</span>. Ask me one at a time what jobs I do every week, over and over, and help me put a rough time on each. Use plain words. Don't suggest any tool yet.</div>
   <button class="copy" data-copy="t-1">Copy prompt 1</button>
-  <p class="note">At work, in a business, at home: it all counts. No job of your own? <a href="#jobs">Borrow a made-up one</a>.</p>
+  <p class="note">At work, in a business, at home: it all counts.</p>
+</section>
+
+<!-- BORROW A JOB (optional, for step 1) -->
+<section class="step optional" id="jobs">
+  <span class="tag">Optional · for Step 1</span>
+  <h2>No job of your own? Borrow one</h2>
+  <p>Tap one. It copies the whole Step 1 prompt, filled in. Paste it into a normal new chat, then carry on from Step 2.</p>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-own" aria-selected="true" aria-controls="jobs-own">Business owner</button>
+    <button role="tab" id="tab-stf" aria-selected="false" aria-controls="jobs-stf">Staff</button>
+  </div>
+  <ul class="jobs" id="jobs-own" role="tabpanel" aria-labelledby="tab-own">
+    <li><span class="grp">Chasing money</span><button data-role="run a small kuih and catering business" data-job="chasing customers who haven&#x27;t paid for their orders"><span><b>Kuih and catering seller</b>Chasing customers who haven&#x27;t paid for their orders</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Same questions, again and again</span><button data-role="run a tuition centre" data-job="answering parents&#x27; WhatsApp questions about fees, schedules and replacement classes"><span><b>Tuition centre owner</b>Answering parents&#x27; WhatsApp questions about fees, schedules and replacement classes</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Reporting</span><button data-role="run a small café" data-job="adding up the week&#x27;s sales and costs from receipts"><span><b>Café owner</b>Adding up the week&#x27;s sales and costs from receipts</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Reminders and follow-ups</span><button data-role="run a hair salon" data-job="reminding customers about appointments and chasing no-shows"><span><b>Hair salon owner</b>Reminding customers about appointments and chasing no-shows</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Paperwork and admin</span><button data-role="run a small shop" data-job="sorting receipts and bills for my accountant every month"><span><b>Small shop owner</b>Sorting receipts and bills for my accountant every month</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Stock and suppliers</span><button data-role="run a mini-market" data-job="checking stock and reordering from suppliers"><span><b>Mini-market owner</b>Checking stock and reordering from suppliers</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Online shop and reviews</span><button data-role="sell online on Shopee and Lazada" data-job="replying to customer reviews and questions"><span><b>Online seller</b>Replying to customer reviews and questions</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Group chats and announcements</span><button data-role="work as a property agent" data-job="sending listing updates to my buyers&#x27; WhatsApp groups"><span><b>Property agent</b>Sending listing updates to my buyers&#x27; WhatsApp groups</span><span class="cp">Copy</span></button></li>
+  </ul>
+  <ul class="jobs" id="jobs-stf" role="tabpanel" aria-labelledby="tab-stf" hidden>
+    <li><span class="grp">Chasing money</span><button data-role="work as an account assistant" data-job="following up on overdue invoices every month-end"><span><b>Account assistant</b>Following up on overdue invoices every month-end</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Same questions, again and again</span><button data-role="work as a customer service executive" data-job="replying to the same 20 questions about delivery and returns"><span><b>Customer service executive</b>Replying to the same 20 questions about delivery and returns</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Reporting to the boss</span><button data-role="work as a sales executive" data-job="writing the weekly sales update for my manager"><span><b>Sales executive</b>Writing the weekly sales update for my manager</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Reminders and follow-ups</span><button data-role="work as an HR executive" data-job="reminding staff to submit claims, leave forms and timesheets"><span><b>HR executive</b>Reminding staff to submit claims, leave forms and timesheets</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Paperwork and admin</span><button data-role="work as an admin executive" data-job="writing the minutes and to-do list after every meeting"><span><b>Admin executive</b>Writing the minutes and to-do list after every meeting</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Stock and suppliers</span><button data-role="work as a purchasing executive" data-job="chasing suppliers for quotations and delivery dates"><span><b>Purchasing executive</b>Chasing suppliers for quotations and delivery dates</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Social media</span><button data-role="work as a marketing executive" data-job="planning and writing the week&#x27;s social media posts"><span><b>Marketing executive</b>Planning and writing the week&#x27;s social media posts</span><span class="cp">Copy</span></button></li>
+    <li><span class="grp">Group chats and announcements</span><button data-role="lead a small team" data-job="posting the weekly roster and announcements in the team WhatsApp group"><span><b>Team lead</b>Posting the weekly roster and announcements in the team WhatsApp group</span><span class="cp">Copy</span></button></li>
+  </ul>
 </section>
 
 <!-- PROMPT 2 -->
@@ -206,22 +246,6 @@
     <li><div><b>Is it the same decision every time?</b><span>Write the rule down once.</span></div></li>
     <li><div><b>Does it need me?</b><span>An unhappy customer. Keep that one yourself.</span></div></li>
   </ol>
-</section>
-
-<section class="step" id="jobs">
-  <span class="tag">No job of your own?</span>
-  <h2>Borrow one of these</h2>
-  <p>Made-up examples. Tap one to copy it, then paste it as your answer.</p>
-  <ul class="jobs">
-    <li><button data-text="Chasing customers for unpaid invoices">Chasing unpaid invoices</button></li>
-    <li><button data-text="Answering the same 20 questions on WhatsApp">Same 20 WhatsApp questions</button></li>
-    <li><button data-text="Writing the weekly sales recap for my boss">Weekly sales recap</button></li>
-    <li><button data-text="Reminding parents about class fees">Reminding parents about fees</button></li>
-    <li><button data-text="Turning meeting notes into a to-do list">Meeting notes → to-do list</button></li>
-    <li><button data-text="Reordering stock from the supplier">Reordering stock</button></li>
-    <li><button data-text="Replying to Shopee or Lazada reviews">Replying to reviews</button></li>
-    <li><button data-text="Planning the guest list for the open house">Open house guest list</button></li>
-  </ul>
 </section>
 
 <section class="step" id="gemini">
@@ -299,11 +323,36 @@
     });
   });
 
+  // Step 1 prompt, one template for the main box and the borrowed jobs
+  function step1(role, town) {
+    return "I'm not technical. I " + role + " in " + town + ". Ask me one at a time what jobs I do every week, over and over, and help me put a rough time on each. Use plain words. Don't suggest any tool yet.";
+  }
+  function townNow() { var t = document.getElementById('f-town').value.trim(); return t || 'Petaling Jaya'; }
+
   document.querySelectorAll('.jobs button').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      copyText(btn.dataset.text).then(function (ok) { if (ok) flash(btn); });
+      var text = step1(btn.dataset.role, townNow()) + ' Start with this one: ' + btn.dataset.job + '.';
+      copyText(text).then(function (ok) {
+        if (!ok) return;
+        var cp = btn.querySelector('.cp'); btn.classList.add('done'); cp.textContent = 'Copied';
+        toast.classList.add('show'); clearTimeout(tt);
+        tt = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+        setTimeout(function () { btn.classList.remove('done'); cp.textContent = 'Copy'; }, 2200);
+      });
     });
   });
+
+  // Owner / Staff tabs
+  var tabs = [['tab-own', 'jobs-own'], ['tab-stf', 'jobs-stf']];
+  function pick(i) {
+    tabs.forEach(function (t, k) {
+      document.getElementById(t[0]).setAttribute('aria-selected', k === i ? 'true' : 'false');
+      document.getElementById(t[1]).hidden = k !== i;
+    });
+    store('jobs-tab', String(i));
+  }
+  tabs.forEach(function (t, k) { document.getElementById(t[0]).addEventListener('click', function () { pick(k); }); });
+  pick(store('jobs-tab') === '1' ? 1 : 0);
 
   // setup fields fill the prompt; remembered on this phone only
   document.querySelectorAll('.fill').forEach(function (span) {
